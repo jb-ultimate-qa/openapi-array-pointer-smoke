@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Array pointer kinds
+  version: 1.0.0
+paths:
+  /shapes:
+    parameters:
+      - name: X-Trace
+        in: header
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+    get:
+      summary: List shapes
+      operationId: listShapes
+      parameters:
+        - $ref: '#/paths/~1shapes/parameters/0'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Shape'
+  /shapes/{id}:
+    get:
+      summary: Get a shape
+      operationId: getShape
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shape'
+components:
+  schemas:
+    Circle:
+      type: object
+      properties:
+        radius:
+          type: number
+    Square:
+      type: object
+      properties:
+        side:
+          type: number
+    Shape:
+      oneOf:
+        - $ref: '#/components/schemas/Circle'
+        - $ref: '#/components/schemas/Square'
+        - type: object
+          properties:
+            sides:
+              type: integer
+    Mixed:
+      anyOf:
+        - type: string
+        - type: object
+          properties:
+            code:
+              type: integer
+    Nested:
+      allOf:
+        - type: object
+          properties:
+            kind:
+              type: string
+        - oneOf:
+            - type: object
+              properties:
+                inner:
+                  type: boolean
+            - type: string
+    Wide:
+      anyOf:
+        - title: v0
+        - title: v1
+        - title: v2
+        - title: v3
+        - title: v4
+        - title: v5
+        - title: v6
+        - title: v7
+        - title: v8
+        - title: v9
+        - title: v10
+    Flow:
+      allOf: [ { type: object, properties: { a: { type: string } } }, { type: object, properties: { b: { type: integer } } } ]
+    Pointers:
+      type: object
+      properties:
+        oneOfItem:
+          $ref: '#/components/schemas/Shape/oneOf/2/properties/sides'
+        anyOfItem:
+          $ref: '#/components/schemas/Mixed/anyOf/1/properties/code'
+        nestedItem:
+          $ref: '#/components/schemas/Nested/allOf/1/oneOf/0/properties/inner'
+        wideItem:
+          $ref: '#/components/schemas/Wide/anyOf/10'
+        flowItem:
+          $ref: '#/components/schemas/Flow/allOf/1/properties/b'
+        parameterSchema:
+          $ref: '#/paths/~1shapes/parameters/1/schema'
+        wholeItem:
+          $ref: '#/components/schemas/Shape/oneOf/2'

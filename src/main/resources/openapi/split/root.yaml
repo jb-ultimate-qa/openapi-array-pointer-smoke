@@ -1,0 +1,49 @@
+openapi: 3.0.3
+info:
+  title: Array pointer, split specification
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /split/configurations:
+    get:
+      summary: List configurations (split)
+      operationId: listSplitConfigurations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas.yaml#/components/schemas/Configuration'
+    post:
+      summary: Create a configuration (split)
+      operationId: createSplitConfiguration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/components/schemas/Configuration'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './schemas.yaml#/components/schemas/Configuration'
+  /split/location-ids:
+    get:
+      summary: List location ids (split)
+      operationId: listSplitLocationIds
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas.yaml#/components/schemas/Location/allOf/1/properties/id'

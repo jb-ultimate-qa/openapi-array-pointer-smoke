@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Array pointer, single JSON file",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/json/configurations": {
+      "get": {
+        "summary": "List configurations (JSON file)",
+        "operationId": "listJsonConfigurations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Configuration" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LocationData": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" }
+        }
+      },
+      "Location": {
+        "allOf": [
+          { "$ref": "#/components/schemas/LocationData" },
+          {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "format": "uuid" }
+            }
+          }
+        ]
+      },
+      "Configuration": {
+        "type": "object",
+        "properties": {
+          "locationId": { "$ref": "#/components/schemas/Location/allOf/1/properties/id" },
+          "name": { "type": "string" }
+        }
+      }
+    }
+  }
+}

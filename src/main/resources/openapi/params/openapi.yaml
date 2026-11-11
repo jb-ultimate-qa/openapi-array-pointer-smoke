@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: test schema
+  version: 1.0.0
+paths:
+  /simple-response/:
+    parameters:
+    - name: c1
+      schema:
+        type: string
+      in: header
+    get:
+      operationId: get_simple_response
+      responses:
+        'default':
+          description: test response
+          content:
+            application/json:
+              schema:
+                type: string
+  /ref-params/:
+    get:
+      operationId: get_ref_params
+      responses:
+        'default':
+          description: test response
+          content:
+            application/json:
+              schema:
+                type: string
+      parameters:
+      - $ref: '#/paths/~1simple-response~1/parameters/0'
+      - $ref: '#/paths/~1simple-response~1/parameters'

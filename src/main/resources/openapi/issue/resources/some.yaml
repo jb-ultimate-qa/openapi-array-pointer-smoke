@@ -1,0 +1,33 @@
+paths:
+  /users:
+    get:
+      tags:
+        - user-controller
+      operationId: getUsers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+components:
+  schemas:
+    LocationData:
+      properties:
+        description:
+          type: string
+    Location:
+      allOf:
+        - $ref: "#/components/schemas/LocationData"
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    Configuration:
+      properties:
+        locationId:
+          $ref: "#/components/schemas/Location/allOf/1/properties/id"

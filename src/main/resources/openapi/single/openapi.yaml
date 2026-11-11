@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: Array pointer, single file
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /locations:
+    get:
+      summary: List locations
+      operationId: listLocations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+  /configurations:
+    get:
+      summary: List configurations
+      operationId: listConfigurations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Configuration'
+    post:
+      summary: Create a configuration
+      operationId: createConfiguration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Configuration'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+  /drafts:
+    post:
+      summary: Create a draft configuration
+      operationId: createDraft
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Configuration'
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    LocationData:
+      type: object
+      properties:
+        description:
+          type: string
+    Location:
+      allOf:
+        - $ref: '#/components/schemas/LocationData'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    Configuration:
+      type: object
+      properties:
+        locationId:
+          $ref: '#/components/schemas/Location/allOf/1/properties/id'
+        name:
+          type: string

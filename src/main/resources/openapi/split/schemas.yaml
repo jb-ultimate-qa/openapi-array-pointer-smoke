@@ -1,0 +1,22 @@
+components:
+  schemas:
+    LocationData:
+      type: object
+      properties:
+        description:
+          type: string
+    Location:
+      allOf:
+        - $ref: '#/components/schemas/LocationData'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+    Configuration:
+      type: object
+      properties:
+        locationId:
+          $ref: '#/components/schemas/Location/allOf/1/properties/id'
+        name:
+          type: string

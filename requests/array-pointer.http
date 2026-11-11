@@ -1,0 +1,38 @@
+### List the users of the report
+GET http://localhost:8080/some
+Accept: application/json
+
+### List locations
+GET http://localhost:8080/locations
+Accept: application/json
+
+### List configurations
+GET http://localhost:8080/configurations
+Accept: application/json
+
+### Create a configuration
+POST http://localhost:8080/configurations
+Content-Type: application/json
+
+{
+  "locationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "default"
+}
+
+### Create a draft configuration
+POST http://localhost:8080/drafts
+Content-Type: application/json
+
+{
+  "locationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "draft"
+}
+
+### Create a configuration, split specification
+POST http://localhost:8080/split/configurations
+Content-Type: application/json
+
+{
+  "locationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "split"
+}

@@ -1,0 +1,7 @@
+openapi: 3.0.3
+info:
+  title: Some API
+  version: v0
+paths:
+  /some:
+    $ref: "./resources/some.yaml#/paths/~1users"

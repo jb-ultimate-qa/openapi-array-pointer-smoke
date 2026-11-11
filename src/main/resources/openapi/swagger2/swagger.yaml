@@ -1,0 +1,43 @@
+swagger: "2.0"
+info:
+  title: Array pointer, Swagger 2.0
+  version: 1.0.0
+host: localhost:8080
+basePath: /v2
+schemes:
+  - http
+paths:
+  /configurations:
+    get:
+      summary: List configurations (Swagger 2.0)
+      operationId: listV2Configurations
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Configuration"
+definitions:
+  LocationData:
+    type: object
+    properties:
+      description:
+        type: string
+  Location:
+    allOf:
+      - $ref: "#/definitions/LocationData"
+      - type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+  Configuration:
+    type: object
+    properties:
+      locationId:
+        $ref: "#/definitions/Location/allOf/1/properties/id"
+      name:
+        type: string
